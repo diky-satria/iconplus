@@ -1,0 +1,18 @@
+html,
+body {
+  overflow: auto;
+}
+.c-primary {
+  background-color: #3d7d8f !important;
+  color: #fff;
+}
+.ant-breadcrumb-link {
+  cursor: pointer;
+}
+.ant-breadcrumb li:last-child {
+  color: #4a8394;
+}
+.ant-select,
+.ant-picker {
+  width: 100% !important;
+}
