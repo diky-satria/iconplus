@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { Card, Select, Progress, Typography } from "antd";
 import {
   RightOutlined,
@@ -61,7 +62,9 @@ export default function Dashboard() {
     setPeriode(value);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const filteredData = dataMain.filter((item: any) => item.periode === value);
+    const filteredData: any = dataMain.filter(
+      (item: any) => item.periode === value
+    );
     setData(filteredData[0].data);
   };
 
@@ -102,168 +105,170 @@ export default function Dashboard() {
         </div>
         <div style={{ marginBottom: 30 }}>
           <div className="row justify-content-between">
-            {data.map((d, index) => {
-              return (
-                <div
-                  className="col-12 col-md-4 col-lg-2 col-xl-2 mb-3"
-                  key={index}
-                >
-                  <Title level={4} style={{ color: "#555" }}>
-                    <ThunderboltOutlined
-                      style={{
-                        borderRadius: "50%",
-                        border: "1px solid #555",
-                        padding: 3,
-                      }}
-                    />{" "}
-                    {d.officeName}
-                  </Title>
+            {data.map(
+              (d: { officeName: string; detailSummary: any }, index) => {
+                return (
+                  <div
+                    className="col-12 col-md-4 col-lg-2 col-xl-2 mb-3"
+                    key={index}
+                  >
+                    <Title level={4} style={{ color: "#555" }}>
+                      <ThunderboltOutlined
+                        style={{
+                          borderRadius: "50%",
+                          border: "1px solid #555",
+                          padding: 3,
+                        }}
+                      />{" "}
+                      {d.officeName}
+                    </Title>
 
-                  {d.detailSummary.map((ds, i) => {
-                    return (
-                      <div className="row mx-1 mt-3" key={i}>
-                        <Card>
-                          <h6 style={{ color: "#555" }}>{ds.roomName}</h6>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              gap: 10,
-                              marginTop: 15,
-                            }}
-                          >
-                            <div>
-                              <Text style={{ color: "#555" }}>
-                                Persentase Pemakaian
-                              </Text>
-                              <h4 style={{ fontWeight: "bold" }}>
-                                {ds.averageOccupancyPerMonth}%
-                              </h4>
+                    {d.detailSummary.map((ds: any, i: number) => {
+                      return (
+                        <div className="row mx-1 mt-3" key={i}>
+                          <Card>
+                            <h6 style={{ color: "#555" }}>{ds.roomName}</h6>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                gap: 10,
+                                marginTop: 15,
+                              }}
+                            >
+                              <div>
+                                <Text style={{ color: "#555" }}>
+                                  Persentase Pemakaian
+                                </Text>
+                                <h4 style={{ fontWeight: "bold" }}>
+                                  {ds.averageOccupancyPerMonth}%
+                                </h4>
+                              </div>
+                              <Progress
+                                type="circle"
+                                percent={ds.averageOccupancyPerMonth}
+                                size={50}
+                                strokeWidth={20}
+                                strokeColor={"#00A3E9"}
+                                showInfo={false}
+                              />
                             </div>
-                            <Progress
-                              type="circle"
-                              percent={ds.averageOccupancyPerMonth}
-                              size={50}
-                              strokeWidth={20}
-                              strokeColor={"#00A3E9"}
-                              showInfo={false}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              gap: 10,
-                              marginTop: 10,
-                            }}
-                          >
-                            <div>
-                              <Text style={{ color: "#555" }}>
-                                Nominal Konsumsi
-                              </Text>
-                              <h4 style={{ fontWeight: "bold" }}>
-                                Rp.{" "}
-                                {numberFormat(
-                                  ds.totalConsumption[0].totalPrice,
-                                  ds.totalConsumption[1].totalPrice,
-                                  ds.totalConsumption[2].totalPrice
-                                )}
-                              </h4>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                gap: 10,
+                                marginTop: 10,
+                              }}
+                            >
+                              <div>
+                                <Text style={{ color: "#555" }}>
+                                  Nominal Konsumsi
+                                </Text>
+                                <h4 style={{ fontWeight: "bold" }}>
+                                  Rp.{" "}
+                                  {numberFormat(
+                                    ds.totalConsumption[0].totalPrice,
+                                    ds.totalConsumption[1].totalPrice,
+                                    ds.totalConsumption[2].totalPrice
+                                  )}
+                                </h4>
+                              </div>
                             </div>
-                          </div>
-                          <div className="mt-1">
-                            <table width={"100%"}>
-                              <tbody>
-                                <tr>
-                                  <td width={"40%"}>
-                                    <Text style={{ fontWeight: "bold" }}>
-                                      Snack Siang
-                                    </Text>
-                                  </td>
-                                  <td>
-                                    <Text>
-                                      {ds.totalConsumption[0].totalPackage}
-                                    </Text>
-                                    <Progress
-                                      strokeWidth={13}
-                                      percent={
-                                        (ds.totalConsumption[0].totalPackage /
-                                          300) *
-                                        100
-                                      }
-                                      percentPosition={{
-                                        align: "start",
-                                        type: "outer",
-                                      }}
-                                      style={{ paddingBottom: 10 }}
-                                      showInfo={false}
-                                    />
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <Text style={{ fontWeight: "bold" }}>
-                                      Makan Siang
-                                    </Text>
-                                  </td>
-                                  <td>
-                                    <Text>
-                                      {ds.totalConsumption[1].totalPackage}
-                                    </Text>
-                                    <Progress
-                                      strokeWidth={13}
-                                      percent={
-                                        (ds.totalConsumption[1].totalPackage /
-                                          300) *
-                                        100
-                                      }
-                                      percentPosition={{
-                                        align: "start",
-                                        type: "outer",
-                                      }}
-                                      style={{ paddingBottom: 10 }}
-                                      showInfo={false}
-                                    />
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <Text style={{ fontWeight: "bold" }}>
-                                      Snack Sore
-                                    </Text>
-                                  </td>
-                                  <td>
-                                    <Text>
-                                      {ds.totalConsumption[2].totalPackage}
-                                    </Text>
-                                    <Progress
-                                      strokeWidth={13}
-                                      percent={
-                                        (ds.totalConsumption[2].totalPackage /
-                                          300) *
-                                        100
-                                      }
-                                      percentPosition={{
-                                        align: "start",
-                                        type: "outer",
-                                      }}
-                                      style={{ paddingBottom: 10 }}
-                                      showInfo={false}
-                                    />
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </Card>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+                            <div className="mt-1">
+                              <table width={"100%"}>
+                                <tbody>
+                                  <tr>
+                                    <td width={"40%"}>
+                                      <Text style={{ fontWeight: "bold" }}>
+                                        Snack Siang
+                                      </Text>
+                                    </td>
+                                    <td>
+                                      <Text>
+                                        {ds.totalConsumption[0].totalPackage}
+                                      </Text>
+                                      <Progress
+                                        strokeWidth={13}
+                                        percent={
+                                          (ds.totalConsumption[0].totalPackage /
+                                            300) *
+                                          100
+                                        }
+                                        percentPosition={{
+                                          align: "start",
+                                          type: "outer",
+                                        }}
+                                        style={{ paddingBottom: 10 }}
+                                        showInfo={false}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <Text style={{ fontWeight: "bold" }}>
+                                        Makan Siang
+                                      </Text>
+                                    </td>
+                                    <td>
+                                      <Text>
+                                        {ds.totalConsumption[1].totalPackage}
+                                      </Text>
+                                      <Progress
+                                        strokeWidth={13}
+                                        percent={
+                                          (ds.totalConsumption[1].totalPackage /
+                                            300) *
+                                          100
+                                        }
+                                        percentPosition={{
+                                          align: "start",
+                                          type: "outer",
+                                        }}
+                                        style={{ paddingBottom: 10 }}
+                                        showInfo={false}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <Text style={{ fontWeight: "bold" }}>
+                                        Snack Sore
+                                      </Text>
+                                    </td>
+                                    <td>
+                                      <Text>
+                                        {ds.totalConsumption[2].totalPackage}
+                                      </Text>
+                                      <Progress
+                                        strokeWidth={13}
+                                        percent={
+                                          (ds.totalConsumption[2].totalPackage /
+                                            300) *
+                                          100
+                                        }
+                                        percentPosition={{
+                                          align: "start",
+                                          type: "outer",
+                                        }}
+                                        style={{ paddingBottom: 10 }}
+                                        showInfo={false}
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </Card>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              }
+            )}
           </div>
         </div>
       </div>
